@@ -44,8 +44,13 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    const blogPostID = req.params.blogPostID
 
+    const updatedBlogPost = await BlogPost.findByIdAndUpdate(blogPostID, req.body, {
+      new: true 
+    })
 
+    res.send(updatedBlogPost)
   } catch (error) {
     console.log(error)
     next(error)

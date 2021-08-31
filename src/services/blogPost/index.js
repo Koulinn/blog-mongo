@@ -1,5 +1,5 @@
 import express from "express"
-import product from "./handlers.js"
+import blogPost from "./handlers.js"
 import lib from '../../lib/index.js'
 import multer from "multer"
 const {cloudStorage} = lib
@@ -10,24 +10,24 @@ const router = express.Router()
 
 router
   .route("/")
-  .get(product.getAll)
+  .get(blogPost.getAll)
 
 router
   .route("/")
-  .post(product.create)
+  .post(blogPost.create)
 
 // router
 //   .route("")
-//   .get(product.getByCategory)
+//   .get(blogPost.getByCategory)
 
 router
   .route("/:blogPostID")
-  .get(product.getSingle)
-//   .put(product.update)
-//   .delete(product.deleteSingle)
+  .get(blogPost.getSingle)
+  .put(blogPost.update)
+//   .delete(blogPost.deleteSingle)
 
 // router
 //   .route("/")
-//   .put(multer({ storage: cloudStorage }).single('image'), product.uploadProdImg)
+//   .put(multer({ storage: cloudStorage }).single('image'), blogPost.uploadProdImg)
   
 export default router
