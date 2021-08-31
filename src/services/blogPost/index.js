@@ -8,9 +8,9 @@ const {cloudStorage} = lib
 
 const router = express.Router()
 
-// router
-//   .route("/")
-//   .get(product.getAll)
+router
+  .route("/")
+  .get(product.getAll)
 
 router
   .route("/")
