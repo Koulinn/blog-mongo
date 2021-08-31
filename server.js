@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import productRouter from "./src/services/products/index.js"
+import blogPostRouter from "./src/services/blogPost/index.js"
 import lib from "./src/lib/index.js"
 import mongoose from 'mongoose'
 
@@ -14,7 +14,7 @@ const { PORT } = process.env
 server.use(express.json())
 server.use(cors(serverConfig))
 
-server.use("/product", productRouter)
+server.use("/blogPost", blogPostRouter)
 
 
 
