@@ -14,6 +14,8 @@ const getAll = async (req, res, next) => {
       next()
     }   
   } catch (error) {
+    res.status(500)
+    res.status(500)
     next(error)
   }
 }
@@ -21,16 +23,16 @@ const getSingle = async (req, res, next) => {
   try {
     const blogPostID = req.params.blogPostID
     const blog = await BlogPost.findById(blogPostID)
+    res.body = blog
 
     if(blog){
-      res.status(200).send(blog)
+      next()
 
     } else{
-      res.status(404).next()
+      next()
     }
-    
-
   } catch (error) {
+    res.status(500)
     console.log(error)
     next(error)
   }
@@ -43,6 +45,7 @@ const create = async (req, res, next) => {
 
     res.status(204).send(DbRes)
   } catch (error) {
+    res.status(500)
     console.log(error)
     next(error)
   }
@@ -58,6 +61,7 @@ const update = async (req, res, next) => {
 
     res.send(updatedBlogPost)
   } catch (error) {
+    res.status(500)
     console.log(error)
     next(error)
   }
@@ -73,6 +77,7 @@ const deleteSingle = async (req, res, next) => {
     res.status(204).send()
 
   } catch (error) {
+    res.status(500)
     console.log(error)
     next(error)
   }
@@ -82,6 +87,7 @@ const getByCategory = async (req, res, next) => {
   try {
 
   } catch (error) {
+    res.status(500)
     console.log(error)
     next(error)
   }
@@ -92,6 +98,7 @@ const uploadProdImg = async (req, res, next) => {
   try {
   
   } catch (error) {
+    res.status(500)
     console.log(error)
     next(error)
   }

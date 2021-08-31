@@ -23,7 +23,7 @@ router
 
 router
   .route("/:blogPostID")
-  .get(blogPost.getSingle)
+  .get(blogPost.getSingle, responseValidations.searchHasResults)
   .put(blogPost.update)
   .delete(blogPost.deleteSingle)
 
