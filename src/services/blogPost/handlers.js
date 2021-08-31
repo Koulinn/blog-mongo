@@ -59,6 +59,12 @@ const update = async (req, res, next) => {
 
 const deleteSingle = async (req, res, next) => {
   try {
+    const blogPostID = req.params.blogPostID
+
+    const DbRes = await BlogPost.findByIdAndDelete(blogPostID)
+
+    if(DbRes)
+    res.status(204).send()
 
   } catch (error) {
     console.log(error)

@@ -24,7 +24,7 @@ router
   .route("/:blogPostID")
   .get(blogPost.getSingle)
   .put(blogPost.update)
-//   .delete(blogPost.deleteSingle)
+  .delete(blogPost.deleteSingle)
 
 // router
 //   .route("/")
