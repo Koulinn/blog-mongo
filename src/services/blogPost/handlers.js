@@ -3,11 +3,17 @@ import BlogPost from "../../db/models/BlogPost.js"
 
 const getAll = async (req, res, next) => {
   try {
-    const blogs = await BlogPost.find({})
- 
-    res.status(200).send(blogs)
+  
+    if(Object.keys(req.query).length != 0){
+      const blogs = await BlogPost.find({...req.query})
+      res.body = blogs
+      next()
+    } else {
+      const blogs = await BlogPost.find({})
+      res.body = blogs
+      next()
+    }   
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
