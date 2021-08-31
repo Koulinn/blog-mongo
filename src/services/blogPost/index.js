@@ -20,9 +20,9 @@ router
 //   .route("")
 //   .get(product.getByCategory)
 
-// router
-//   .route("/")
-//   .get(product.getSingle)
+router
+  .route("/:blogPostID")
+  .get(product.getSingle)
 //   .put(product.update)
 //   .delete(product.deleteSingle)
 

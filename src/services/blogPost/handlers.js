@@ -3,7 +3,9 @@ import BlogPost from "../../db/models/BlogPost.js"
 
 const getAll = async (req, res, next) => {
   try {
+    const blogs = await BlogPost.find({})
  
+    res.status(200).send(blogs)
   } catch (error) {
     console.log(error)
     next(error)
@@ -11,6 +13,16 @@ const getAll = async (req, res, next) => {
 }
 const getSingle = async (req, res, next) => {
   try {
+    const blogPostID = req.params.blogPostID
+    const blog = await BlogPost.findById(blogPostID)
+
+    if(blog){
+      res.status(200).send(blog)
+
+    } else{
+      res.status(404).next()
+    }
+    
 
   } catch (error) {
     console.log(error)
