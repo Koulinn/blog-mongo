@@ -1,6 +1,7 @@
 import express from "express"
 import blogPost from "./handlers.js"
 import lib from '../../lib/index.js'
+import responseValidations from "../../lib/response-validations.js"
 import multer from "multer"
 const {cloudStorage} = lib
 
@@ -10,7 +11,7 @@ const router = express.Router()
 
 router
   .route("/")
-  .get(blogPost.getAll)
+  .get(blogPost.getAll, responseValidations.searchHasResults)
 
 router
   .route("/")

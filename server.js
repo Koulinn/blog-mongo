@@ -18,10 +18,6 @@ server.use("/blogPost", blogPostRouter)
 
 
 
-
-
-
-
 server.use(errorHandlers.forbidden)
 server.use(errorHandlers.notFound)
 server.use(errorHandlers.badRequest)
