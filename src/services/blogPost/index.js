@@ -36,6 +36,8 @@ router
 router
     .route("/:blogPostID/comments/:commentID")
     .get(blogComments.getSingleComment)
+    .put(blogComments.update)
+    .delete(blogComments.deleteSingle)
 
 // router
 //   .route("/")

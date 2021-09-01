@@ -18,7 +18,7 @@ const getSingleComment = async (req, res, next) => {
   try {
     const { blogPostID, commentID } = req.params
     const comment = await BlogPost.findOne(
-      { "blogComments._id": req.params.commentID },
+      { "blogComments._id": commentID },
       {
         "blogComments.$": 1,
         "_id": 0 //suppress blogID
@@ -51,13 +51,22 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const blogPostID = req.params.blogPostID
+    const { blogPostID, commentID } = req.params
 
-    const updatedBlogPost = await BlogPost.findByIdAndUpdate(blogPostID, req.body, {
-      new: true
-    })
+    const updatedComment = await BlogPost.findOneAndUpdate(
+      { "_id": blogPostID, "blogComments._id" : commentID },
+      {
+        $set: {
+          "blogComments.$": req.body
+        },
+        
+      },
+     
+      {new: true}
+      )
 
-    res.send(updatedBlogPost)
+      console.log(updatedComment)
+    res.send(updatedComment)
   } catch (error) {
     res.status(500)
     console.log(error)
@@ -67,12 +76,21 @@ const update = async (req, res, next) => {
 
 const deleteSingle = async (req, res, next) => {
   try {
-    const blogPostID = req.params.blogPostID
+    const { blogPostID, commentID } = req.params
 
-    const DbRes = await BlogPost.findByIdAndDelete(blogPostID)
+    const blog = await BlogPost.findByIdAndUpdate(
+      blogPostID,
+      {
+        $pull: {
+          blogComments: { _id: commentID },
+        },
+      },
+      {
+        new: true,
+      }
+    )
 
-    if (DbRes)
-      res.status(204).send()
+      res.status(200).send(blog)
 
   } catch (error) {
     res.status(500)
@@ -81,27 +99,8 @@ const deleteSingle = async (req, res, next) => {
   }
 }
 
-const getByCategory = async (req, res, next) => {
-  try {
-
-  } catch (error) {
-    res.status(500)
-    console.log(error)
-    next(error)
-  }
-}
 
 
-const uploadProdImg = async (req, res, next) => {
-  try {
-
-  } catch (error) {
-    res.status(500)
-    console.log(error)
-    next(error)
-  }
-
-}
 
 
 const blogComments = {
@@ -109,8 +108,7 @@ const blogComments = {
   getCommentsFromBlog: getCommentsFromBlog,
   getSingleComment: getSingleComment,
   update: update,
-  deleteSingle: deleteSingle,
-  getByCategory: getByCategory
+  deleteSingle: deleteSingle
 }
 
 export default blogComments

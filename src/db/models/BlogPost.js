@@ -18,8 +18,6 @@ const blogPostSchema = new Schema({
     blogComments: [{
         comment: String,
         rate: Number,
-    },{
-        timestamps: true
     }]
 }, {
     timestamps: true
