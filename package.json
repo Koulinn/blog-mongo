@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "api-query-params": "^5.0.0",
     "cloudinary": "^1.26.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
