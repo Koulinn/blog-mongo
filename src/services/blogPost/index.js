@@ -27,12 +27,15 @@ router
   .get(blogPost.getSingle, responseValidations.searchHasResults)
   .put(blogPost.update)
   .delete(blogPost.deleteSingle)
-  
+
 router
   .route("/:blogPostID/comments")
   .post(blogComments.create)
   .get(blogComments.getCommentsFromBlog)
-
+  
+router
+    .route("/:blogPostID/comments/:commentID")
+    .get(blogComments.getSingleComment)
 
 // router
 //   .route("/")

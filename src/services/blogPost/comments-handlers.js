@@ -4,28 +4,27 @@ import aqp from 'api-query-params';
 
 const getCommentsFromBlog = async (req, res, next) => {
   try {
-    
-      const blogs = await BlogPost.findById(req.params.blogPostID)
-      res.send(blogs.blogComments)
-    
+
+    const blogs = await BlogPost.findById(req.params.blogPostID)
+    res.send(blogs.blogComments)
+
   } catch (error) {
     res.status(500)
     res.status(500)
     next(error)
   }
 }
-const getSingle = async (req, res, next) => {
+const getSingleComment = async (req, res, next) => {
   try {
-    const blogPostID = req.params.blogPostID
-    const blog = await BlogPost.findById(blogPostID)
-    res.body = blog
-
-    if(blog){
-      next()
-
-    } else{
-      next()
-    }
+    const { blogPostID, commentID } = req.params
+    const comment = await BlogPost.findOne(
+      { "blogComments._id": req.params.commentID },
+      {
+        "blogComments.$": 1,
+        "_id": 0 //suppress blogID
+      }
+    )
+    res.status(200).send(comment)
   } catch (error) {
     res.status(500)
     console.log(error)
@@ -35,7 +34,7 @@ const getSingle = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
-      const addComment = await BlogPost.findByIdAndUpdate(
+    const addComment = await BlogPost.findByIdAndUpdate(
       req.params.blogPostID,
       { $push: { blogComments: req.body } },
       { new: true }
@@ -55,7 +54,7 @@ const update = async (req, res, next) => {
     const blogPostID = req.params.blogPostID
 
     const updatedBlogPost = await BlogPost.findByIdAndUpdate(blogPostID, req.body, {
-      new: true 
+      new: true
     })
 
     res.send(updatedBlogPost)
@@ -72,8 +71,8 @@ const deleteSingle = async (req, res, next) => {
 
     const DbRes = await BlogPost.findByIdAndDelete(blogPostID)
 
-    if(DbRes)
-    res.status(204).send()
+    if (DbRes)
+      res.status(204).send()
 
   } catch (error) {
     res.status(500)
@@ -95,7 +94,7 @@ const getByCategory = async (req, res, next) => {
 
 const uploadProdImg = async (req, res, next) => {
   try {
-  
+
   } catch (error) {
     res.status(500)
     console.log(error)
@@ -108,7 +107,7 @@ const uploadProdImg = async (req, res, next) => {
 const blogComments = {
   create: create,
   getCommentsFromBlog: getCommentsFromBlog,
-  getSingle: getSingle,
+  getSingleComment: getSingleComment,
   update: update,
   deleteSingle: deleteSingle,
   getByCategory: getByCategory
