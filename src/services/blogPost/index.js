@@ -32,6 +32,9 @@ router
     .get(blogComments.getSingleComment)
     .put(blogComments.update)
     .delete(blogComments.deleteSingle)
-
+    
+    router
+        .route("/:blogPostID/like/:userID")
+        .get(blogPost.likes)
   
 export default router

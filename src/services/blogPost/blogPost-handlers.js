@@ -86,13 +86,39 @@ const deleteSingle = async (req, res, next) => {
     next(error)
   }
 }
+const likes = async (req, res, next) => {
+  try {
+    const {blogPostID, userID} = req.params
+    const isLiked = await BlogPost.find( { likes: userID } )
+    let response
+    if (isLiked.length === 0 ){
+      response = await BlogPost.findByIdAndUpdate(blogPostID, {$push : {
+        likes: userID
+      }}, {new: true})
+      
+    } else {
+      response = await BlogPost.findByIdAndUpdate(blogPostID, {$pull : {
+        likes: userID
+      }}, {new: true})
+
+    }
+
+    res.send({totalLikes: response.likes.length, currentUserLike: response.likes.includes(userID)? true: false})
+
+  } catch (error) {
+    res.status(500)
+    console.log(error)
+    next(error)
+  }
+}
 
 const blogPost = {
   create: create,
   getAll: getAll,
   getSingle: getSingle,
   update: update,
-  deleteSingle: deleteSingle
+  deleteSingle: deleteSingle,
+  likes : likes
 }
 
 export default blogPost
