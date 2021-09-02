@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import blogPostRouter from "./src/services/blogPost/index.js"
+import usersRouter from "./src/services/user/index.js"
 import lib from "./src/lib/index.js"
 import mongoose from 'mongoose'
 
@@ -15,6 +16,7 @@ server.use(express.json())
 server.use(cors(serverConfig))
 
 server.use("/blogPost", blogPostRouter)
+server.use("/user", usersRouter)
 
 
 
