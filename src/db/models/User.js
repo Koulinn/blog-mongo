@@ -10,10 +10,11 @@ const userSchema = new Schema(
     {
         timestamps: true
     })
-    userSchema.static("destroy", async function (userId) {
-    const DbRes = await this.findByIdAndDelete(userId)
 
-    return { DbRes }
+userSchema.static("destroy", async function (userId) {
+const DbRes = await this.findByIdAndDelete(userId)
+
+return { DbRes }
 })
 
 export default model('User', userSchema)

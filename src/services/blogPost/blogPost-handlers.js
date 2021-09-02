@@ -31,14 +31,10 @@ const getSingle = async (req, res, next) => {
   try {
     const blogPostID = req.params.blogPostID
     const blog = await BlogPost.findById(blogPostID)
-    res.body = blog
-
-    if(blog){
-      next()
-
-    } else{
-      next()
-    }
+    .populate('author')
+    console.log(blog)
+    res.send(blog)
+   
   } catch (error) {
     res.status(500)
     console.log(error)
@@ -91,37 +87,12 @@ const deleteSingle = async (req, res, next) => {
   }
 }
 
-const getByCategory = async (req, res, next) => {
-  try {
-
-  } catch (error) {
-    res.status(500)
-    console.log(error)
-    next(error)
-  }
-}
-
-
-const uploadBlogCover = async (req, res, next) => {
-  try {
-  
-  } catch (error) {
-    res.status(500)
-    console.log(error)
-    next(error)
-  }
-
-}
-
-
 const blogPost = {
   create: create,
   getAll: getAll,
   getSingle: getSingle,
   update: update,
-  deleteSingle: deleteSingle,
-  getByCategory: getByCategory,
-  uploadBlogCover: uploadBlogCover
+  deleteSingle: deleteSingle
 }
 
 export default blogPost

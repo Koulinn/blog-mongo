@@ -1,5 +1,5 @@
 import BlogPost from "../../db/models/BlogPost.js"
-import aqp from 'api-query-params';
+
 
 
 const getCommentsFromBlog = async (req, res, next) => {
@@ -37,7 +37,9 @@ const create = async (req, res, next) => {
     const addComment = await BlogPost.findByIdAndUpdate(
       req.params.blogPostID,
       { $push: { blogComments: req.body } },
-      { new: true }
+      { new: true,
+        runValidators: true
+      }
     )
 
     console.log(addComment)

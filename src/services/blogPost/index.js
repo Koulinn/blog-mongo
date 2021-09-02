@@ -1,10 +1,8 @@
 import express from "express"
 import blogPost from "./blogPost-handlers.js"
 import blogComments from "./comments-handlers.js"
-import lib from '../../lib/index.js'
 import responseValidations from "../../lib/response-validations.js"
-import multer from "multer"
-const {cloudStorage} = lib
+
 
 
 
@@ -18,13 +16,9 @@ router
   .route("/")
   .post(blogPost.create)
 
-// router
-//   .route("")
-//   .get(blogPost.getByCategory)
-
 router
   .route("/:blogPostID")
-  .get(blogPost.getSingle, responseValidations.searchHasResults)
+  .get(blogPost.getSingle)
   .put(blogPost.update)
   .delete(blogPost.deleteSingle)
 
@@ -39,8 +33,5 @@ router
     .put(blogComments.update)
     .delete(blogComments.deleteSingle)
 
-// router
-//   .route("/")
-//   .put(multer({ storage: cloudStorage }).single('image'), blogPost.uploadBlogCover)
   
 export default router
