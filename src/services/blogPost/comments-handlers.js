@@ -57,15 +57,19 @@ const update = async (req, res, next) => {
       { "_id": blogPostID, "blogComments._id" : commentID },
       {
         $set: {
-          "blogComments.$": req.body
+          "blogComments.$": { 
+            "_id": commentID,
+            ...req.body
+          },
+          
         },
-        
+               
       },
      
       {new: true}
       )
 
-      console.log(updatedComment)
+      console.log(updatedComment, "<<<<<<<<<<<<<<<<<<<<<<<<<<")
     res.send(updatedComment)
   } catch (error) {
     res.status(500)
